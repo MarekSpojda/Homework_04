@@ -1,0 +1,29 @@
+Chicago Rockford International Airport;RFD;America/Chicago
+Tri-State/Milton J. Ferguson Field;HTS;America/Indiana/Vevay
+Dubuque Regional Airport;DBQ;America/Chicago
+Seattle Tacoma International Airport;SEA;America/Vancouver
+Lovell Field;CHA;America/Kentucky/Monticello
+Perth International Airport;PER;Australia/Perth
+Brisbane International Airport;BNE;Australia/Brisbane
+Christchurch International Airport;CHC;Pacific/Auckland
+Wellington International Airport;WLG;Pacific/Auckland
+Melbourne International Airport;MEL;Australia/Melbourne
+Oslo Gardermoen Airport;OSL;Europe/Oslo
+Dusseldorf International Airport;DUS;Europe/Amsterdam
+Frankfurt am Main International Airport;FRA;Europe/Luxembourg
+Sheremetyevo International Airport;SVO;Europe/Moscow
+Cologne Bonn Airport;CGN;Europe/Luxembourg
+Mombasa Moi International Airport;MBA;Africa/Dar_es_Salaam
+Khartoum International Airport;KRT;Africa/Khartoum
+Murtala Muhammed International Airport;LOS;Africa/Lagos
+King Shaka International Airport;DUR;Africa/Maseru
+Jomo Kenyatta International Airport;NBO;Africa/Nairobi
+Chongqing Jiangbei International Airport;CKG;Asia/Macau
+Nanjing Lukou Airport;NKG;Asia/Shanghai
+Heydar Aliyev International Airport;GYD;Asia/Baku
+Yaoqiang Airport;TNA;Asia/Shanghai
+Tom Jobim International Airport;GIG;America/Sao_Paulo
+Alejandro Velasco Astete International Airport;CUZ;America/La_Paz
+Presidente Juscelino Kubistschek International Airport;BSB;America/Sao_Paulo
+Carrasco International /General C L Berisso Airport;MVD;America/Montevideo
+Deputado Luís Eduardo Magalhães International Airport;SSA;America/Bahia

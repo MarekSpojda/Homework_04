@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+    <welcome-file-list>
+        <welcome-file>index3.jsp</welcome-file>
+    </welcome-file-list>
+
+    <context-param>
+        <param-name>database</param-name>
+        <param-value>guests</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>user</param-name>
+        <param-value>root</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>password</param-name>
+        <param-value>coderslab</param-value>
+    </context-param>
+</web-app>
