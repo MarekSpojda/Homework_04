@@ -18,6 +18,11 @@ import java.util.Locale;
 
 @WebServlet(name = "Servlet_02", urlPatterns = {"/task5"})
 public class Servlet_02 extends HttpServlet {
+    private String startZone = null;
+    private String startCodeForJsp = null;
+    private String endZone = null;
+    private String endCodeForJsp = null;
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
@@ -28,38 +33,12 @@ public class Servlet_02 extends HttpServlet {
         String flightTime = request.getParameter("flight-time");
         String price = request.getParameter("price");
 
-        if (startAirport.equals(endAirport)) {
-            response.getWriter().println("Lotnisko wylotu jest takie same jak lotnisko przylotu.");
-        } else if (startTime.equals("")) {
-            response.getWriter().println("Nie podano daty lotu.");
-        } else if (flightTime.equals("") || flightTime.equals("0")) {
-            response.getWriter().println("Czas lotu nie może wynosić 0.");
-        } else if (price.equals("0")) {
-            response.getWriter().println("Cena lotu musi być większa od 0.");
-        } else {
-            response.getWriter().println("Lotnisko wylotu: " + startAirport + "<br>");
-            response.getWriter().println("Lotnisko przylotu: " + endAirport + "<br>");
-            response.getWriter().println("Czas startu: " + startTime + "<br>");
-            response.getWriter().println("Długość lotu w godzinach: " + flightTime + "<br>");
-            response.getWriter().println("Cena lotu: " + price + "<br>");
-        }
+        validateFlight(response, startAirport, endAirport, startTime, flightTime, price);
 
         HttpSession session = request.getSession();
         List<Airport> airports = (ArrayList<Airport>) session.getAttribute("airports");
-        String startZone = null;
-        String startCodeForJsp = null;
-        String endZone = null;
-        String endCodeForJsp = null;
         for (Airport airport : airports) {
-            if (airport.getName().equals(startAirport)) {
-                startZone = airport.getTimezone();
-                startCodeForJsp = airport.getCode();
-            }
-
-            if (airport.getName().equals(endAirport)) {
-                endZone = airport.getTimezone();
-                endCodeForJsp = airport.getCode();
-            }
+            assignZoneAndCode(airport, startAirport, endAirport);
         }
 
         ZonedDateTime startDateTime = null;
@@ -76,10 +55,11 @@ public class Servlet_02 extends HttpServlet {
             response.getWriter().println("Lokalny czas przylotu: " + format.format(endtDateTime));
         } catch (Exception e) {
             response.getWriter().println(">>> !! Wystąpił nieoczekiwany błąd. Przepraszamy za utrudnienia. Jeśli to " +
-                    "możliwe zgłoś zaistniałą sytuację pracownikowi firmy. !!<<<");
+                    "możliwe zgłoś zaistniałą sytuację pracownikowi firmy. !! <<<");
             e.printStackTrace();
         }
 
+        assert format != null;
         Flight flight = new Flight(startAirport, endAirport, format.format(endtDateTime), Double.parseDouble(price));
         request.setAttribute("flight", flight);
         request.setAttribute("start", format.format(startDateTime));
@@ -89,6 +69,38 @@ public class Servlet_02 extends HttpServlet {
         request.setAttribute("flightTime", flightTime);
 
         request.getRequestDispatcher("/WEB-INF/displayFlight.jsp").include(request, response);
+    }
+
+    private void assignZoneAndCode(Airport airportToCheck, String startAirport, String endAirport) {
+        if (airportToCheck.getName().equals(startAirport)) {
+            startZone = airportToCheck.getTimezone();
+            startCodeForJsp = airportToCheck.getCode();
+        } else if (airportToCheck.getName().equals(endAirport)) {
+            endZone = airportToCheck.getTimezone();
+            endCodeForJsp = airportToCheck.getCode();
+        }
+    }
+
+    private void validateFlight(HttpServletResponse response, String startAirport, String endAirport, String startTime, String flightTime, String price) throws IOException {
+        if (startAirport.equals(endAirport)) {
+            response.getWriter().println("Lotnisko wylotu jest takie same jak lotnisko przylotu.");
+        } else if (startTime.equals("")) {
+            response.getWriter().println("Nie podano daty lotu.");
+        } else if (flightTime.equals("") || flightTime.equals("0")) {
+            response.getWriter().println("Czas lotu nie może wynosić 0.");
+        } else if (price.equals("0")) {
+            response.getWriter().println("Cena lotu musi być większa od 0.");
+        } else {
+            generateFlightInfo(response, startAirport, endAirport, startTime, flightTime, price);
+        }
+    }
+
+    private void generateFlightInfo(HttpServletResponse response, String startAirport, String endAirport, String startTime, String flightTime, String price) throws IOException {
+        response.getWriter().println("Lotnisko wylotu: " + startAirport + "<br>");
+        response.getWriter().println("Lotnisko przylotu: " + endAirport + "<br>");
+        response.getWriter().println("Czas startu: " + startTime + "<br>");
+        response.getWriter().println("Długość lotu w godzinach: " + flightTime + "<br>");
+        response.getWriter().println("Cena lotu: " + price + "<br>");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
